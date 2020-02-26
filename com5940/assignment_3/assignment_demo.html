@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta http-equiv="Content-Security-Policy"
+        content="default-src * 'self' data: gap: 'unsafe-inline' 'unsafe-eval';
+        style-src * 'self' 'unsafe-inline' 'unsafe-eval' gap:;
+        script-src * 'self' 'unsafe-inline' 'unsafe-eval' gap:; frame-src *;">
+        <title>Japanxm</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link href="css/font-lato.css" rel="stylesheet" type="text/css">
+        <link href="css/pingendo.css" rel="stylesheet" type="text/css">
+        <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="css/style.css">
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+        <script>
+               function modal_handle(餐厅名称,img,地点,综合评分,人均消费,食物类型) {
+                            $("h3.modal-title").html(`${餐厅名称}`);
+                            $(".modal-body").html(`<img src="${img}"
+                                class="img-responsive"><p>${地点},<br>${综合评分},<br>${人均消费},<br>${食物类型}</p>`);
+                            $('#popup-photo').modal('show');
+                } // end modal_handle function
+
+                function topFunction() {
+                    $('html, body').animate({scrollTop : 0},800);
+                    return false;
+                } // end topFunction
+
+        </script>
+    </head>
+    <body>
+        <div id="top"></div>
+        <header>
+        <div class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+                <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="active">
+                            <a href="#top">Home</a>
+                        </li>
+                        <li>
+                            <a href="#album">Album</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        </header>
+        <div class="cover">
+            <div class="cover-image" style="background-image : url('img/sushi.jpg')"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h1 class="text-muted">日食厦门</h1>
+                        <p>日本料理 | 在厦门</p>
+                        <br>
+                        <br>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="album">
+            <div class="container" id="album_items">
+            </div> <!-- end container -->
+        </div>
+        <div class="modal fade" id="popup-photo">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 class="modal-title"></h3>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <p></p>
+                        <a class="btn btn-default" data-dismiss="modal">看完了</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button onclick="topFunction()" id="myBtn" title="Go to top">^</button>
+        <div class="footer">
+            <div class="footer">
+                <div class="container">
+                    <p class="float-right">
+                        <a href="#top" style="
+                        color: white;
+                        vertical-align: middle;
+                        text-decoration: none;">回到顶部</a>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+        <script>
+
+        </script>
+
+        <script>
+            $(document).ready(function(){
+                var counter = 1;
+                var at_getapi = "https://api.airtable.com/v0/appTPlThl5MamShOK/All?api_key=keyGUZoAEsuZnDjWU";
+                $.getJSON(at_getapi, function(result) {
+                    $.each(result.records, function(key,value) {
+                            var 餐厅名称 = value.fields.餐厅名称;
+                            var img = value.fields.img; 
+                            var 食物类型 = value.fields.食物类型;                       
+                            var 地点 = value.fields.地点;                            
+                            var 综合评分 = value.fields.综合评分;
+                            var 人均消费 = value.fields.人均消费;
+                            if (counter == 1) {$("#album_items").append(`<div class="row">`)};
+                            $("#album_items").append(`<div class="col-md-4">
+                        <div class="thumbnail">
+                            <img height="auto" width="80%" src="${img}"
+                            class="img-responsive" style="max-height:200px;">
+                            <div class="caption">
+                                <h3>${餐厅名称}</h3>                   
+                                
+                                <button class="btn btn-warning btn-lg" onclick="modal_handle('${餐厅名称}','${img}','食物类型: ${食物类型}','餐厅地址: ${地点}','综合评分: ${综合评分}','人均消费: ${人均消费}')" data-toggle="modal"
+                                 data-id="107" data-body="testing...">查看详情</button>
+                            </div>
+                        </div>
+                    </div>`);
+                            counter = counter +1; // counter++;
+                            if (counter == 4) {
+                                $("#album_items").append(`<div class="/row">`);
+                                counter = 1;
+                            };
+
+                    }); // end each
+                }); // end getJSON
+
+                var mybutton = document.getElementById("myBtn");
+                // When the user scrolls down 20px from the top of the document, show the button
+                window.onscroll = function() {scrollFunction()};
+
+                function scrollFunction() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    mybutton.style.display = "block";
+                } else {
+                    mybutton.style.display = "none";
+                }
+                }
+                // When the user clicks on the button, scroll to the top of the document
+            }); // end document ready
+
+        </script>
+        </script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script id="rendered-js">
+                    // jQuery Smooth Scroll
+                    // https://www.w3schools.com/jquery/tryit.asp?filename=tryjquery_eff_animate_smoothscroll
+                    $("a").on('click', function(event) {
+
+                    // Make sure this.hash has a value before overriding default behavior
+                    if (this.hash !== "") {
+                    // Prevent default anchor click behavior
+                    event.preventDefault();
+
+                    // Store hash
+                    var hash = this.hash;
+
+                    // Using jQuery's animate() method to add smooth page scroll
+                    // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top
+                    }, 800, function(){
+
+                        // Add hash (#) to URL when done scrolling (default click behavior)
+                        window.location.hash = hash;
+                    }); // end animate
+                    } // End if this.hash
+                    }); // end onclick
+
+                    $("a").on('click touchend', function(event) {
+
+                     // Make sure this.hash has a value before overriding default behavior
+                     if (this.hash !== "") {
+                    // Prevent default anchor click behavior
+                    event.preventDefault();
+
+                    // Store hash
+                    var hash = this.hash;
+
+                    // Using jQuery's animate() method to add smooth page scroll
+                    // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top
+                    }, 800, function(){
+
+                        // Add hash (#) to URL when done scrolling (default click behavior)
+                        window.location.hash = hash;
+                    }); // end animate
+                    } // End if this.hash
+                    }); // end onclick
+        </script>
+    </body>
+</html>
