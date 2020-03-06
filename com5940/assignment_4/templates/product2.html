@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+
+   {% for item in dataset %}
+        {% if loop.index == 1 %}{% set counter = ( counter | default(1) ) %}{% endif %}
+        {% if counter == 1 %}<div class="row">{% endif %}
+        <div class="col-md-4">
+          <div class="thumbnail">
+              <p>餐厅名称:{{ item['餐厅名称'] }}<br>食物类型:{{ item['食物类型'] }}<br>地点:{{ item['地点'] }}<br>人均消费:{{ item['人均消费'] }}<br>综合评分:{{ item['综合评分'] }}</p>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                </div>
+          </div>
+        </div> 
+       {% if counter == 3 %}</div><!--end row-->{%  set counter = ( counter | default(1) ) %}{% else %}{% set counter = ( counter | default(0) ) + 1 %}{% endif %}
+      {% endfor %} 
+
+{% endblock %}
