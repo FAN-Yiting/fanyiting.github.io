@@ -1,0 +1,59 @@
+<form role="form" method="post" action="/update_restaurant">
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                      <label for="rank">餐厅排名</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                      <input type="text" name="rank" id="upd_rank" class="form-control" placeholder="rank" required autofocus>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                    <label for="name">餐厅名称</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <input type="text" name="name" id="upd_name" class="form-control" placeholder="name" required>
+                                  </div>
+                              </div>
+                               <div class="form-group">
+                                  <div class="col-sm-4">
+                                    <label for="img">图片</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <input type="text" name="img" id="upd_img" class="form-control" placeholder="img" required>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                    <label for="food_type">食物类型</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <input type="text" name="food_type" id="upd_food_type" class="form-control" placeholder="food_type" required>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                    <label for="destination">地点</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <input type="text" name="destination" id="upd_destination" class="form-control" placeholder="destination" required>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                    <label for="per">人均消费</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <input type="text" name="per" id="upd_per" class="form-control" placeholder="per" required>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                    <label for="score">评分</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <input type="text" step="0.01" min="0" max="5" name="score" id="upd_score" class="form-control" placeholder="0.01" required>
+                                  </div>
+                              </div>
+                             <button type="submit" class="mt-3 btn btn-primary">提交</button>
+                        </form>

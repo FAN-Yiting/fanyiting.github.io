@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+
+  {% for restaurant in restaurants.items %}
+       {% if loop.index == 1 %}{% set counter = ( counter | default(1) ) %}{% endif %}
+        {% if counter == 1 %}<div class="row" id="myAlbum">{% endif %}
+            <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+              <img width="100%" height="200px" src="{{restaurant.img}}" style="object-fit:cover">
+              <p>餐厅排名:{{restaurant.rank}}<br>餐厅名称:{{restaurant.name}}<br>食物类型:{{restaurant.food_type}}<br>地点:{{restaurant.destination}}<br>人均消费:{{restaurant.per}}<br>顾客评分:{{restaurant.score}}</p>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                </div>
+          </div>
+        </div> 
+       {% if counter == 3 %}</div><!--end row-->{%  set counter = ( counter | default(1) ) %}{% else %}{% set counter = ( counter | default(0) ) + 1 %}{% endif %}
+  {% endfor %}
+  <div class="container" style="float: left;">
+  {% for page in restaurants.iter_pages() %}  
+    {% if page %}
+        <a href="{{url_for('album')}}/{{ page }}">{{ page }}</a>
+    {% else %}
+        ...
+    {% endif %}
+  {% endfor %}  
+  </div>
+{% endblock %}

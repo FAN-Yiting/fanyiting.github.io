@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}"> 
+  <link rel="stylesheet" href="{{url_for('static', filename='css/jquery.dataTables.min.css')}}">  
+  <link rel="stylesheet" href="{{url_for('static', filename='css/buttons.dataTables.min.css')}}"> 
+  <link rel="stylesheet" href="{{url_for('static', filename='css/buttons.bootstrap.min.css')}}"> 
+  <link rel="stylesheet" href="{{url_for('static', filename='css/select.dataTables.min.css')}}"> 
+  <link rel="stylesheet" href="{{url_for('static', filename='css/rowReorder.dataTables.min.css')}}"> 
+  <link rel="stylesheet" href="{{url_for('static', filename='css/responsive.dataTables.min.css')}}"> 
+  <link rel="stylesheet" href="{{url_for('static', filename='css/dataTables.bootstrap.min.css')}}"> 
+  <link rel="stylesheet" href="{{url_for('static', filename='css/fixedHeader.bootstrap.min.css')}}"> 
+  <link rel="stylesheet" href="{{url_for('static', filename='css/responsive.bootstrap.min.css')}}"> 
+  <link rel="stylesheet" href="{{url_for('static', filename='css/font-awesome.min.css')}}"> 
+  <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='css/list_album.css')}}"> 
+  <script src="{{url_for('static', filename='js/jquery.min.js')}}"></script>
+  <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+  <link href="{{url_for('static', filename='css/font-lato.css')}}" rel="stylesheet" type="text/css">
+  <link href="{{url_for('static', filename='css/pingendo.css')}}" rel="stylesheet" type="text/css">
+  <link href="{{url_for('static',filename='css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="{{url_for('static',filename='css/mystyle.css')}}">
+    
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media
+    queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file://
+    -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  <style>
+   
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Assignment 5</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/">主页</a></li>
+          <li><a href="/album/1">餐厅概览</a></li>
+          <li><a href="/list_album">餐厅列表</a></li> 
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>
+          <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <div class="container-fluid" id="content-page">
+          <br><br><br>
+          <div class='container'>
+            <table id="myTable" class="table table-striped table-bordered display nowrap responsive dtr-inline collapsed" style="width:100%" >
+              <thead>
+                <tr>
+                  <th>餐厅排名</th>
+                  <th>餐厅名称</th>
+                  <th>图片</th>
+                  <th>食物类型</th>
+                  <th>地点</th>
+                  <th>人均消费</th>
+                  <th>评分</th>  
+                </tr>
+              </thead>
+              <tbody>
+                 {% for row in entries  %}
+                    <tr>
+                      <td>{{ row["rank"] }}</td>
+                      <td>{{ row["name"] }}</td>
+                      <td>{{ row["img"] }}</td>
+                      <td>{{ row["food_type"] }}</td>
+                      <td>{{ row["destination"] }}</td>
+                      <td>{{ row["per"] }}</td>
+                      <td>{{ row["score"] }}</td>  
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+            </table>
+                 <!--- MyAddForm -->
+                <div class="modal fade" id="myAddForm" role="dialog">
+                  <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Add Entry</h4>
+                      </div>
+                      <div class="modal-body">
+                        <!-- modal form -->
+                        
+                         <form role="form" method="post" action="/add_restaurant">
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                    <label for="rank">餐厅排名</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <input type="number" name="rank" id="add_rank" class="form-control" placeholder="rank" required>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                    <label for="name">餐厅名称</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <input type="text" name="name" id="add_name" class="form-control" placeholder="name" required autofocus>
+                                  </div>
+                              </div>
+                             
+                             <div class="col-sm-4">
+                                    <label for="img">图片</label>
+                                  </div>
+                                 <div class="col-sm-8">
+                                   <input type="text" name="img" id="add_img" class="form-control" placeholder="img" required>
+                                 </div>
+                          
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                    <label for="food_type">食物类型</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <input type="text" name="food_type" id="add_food_type" class="form-control" placeholder="food_type" required>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                    <label for="destination">地点</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <input type="text" name="destination" id="add_destination" class="form-control" placeholder="destination" required>
+                                  </div>
+                              </div>
+                               <div class="form-group">
+                                  <div class="col-sm-4">
+                                    <label for="per">人均消费</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <input type="text" name="per" id="add_per" class="form-control" placeholder="Per capita consumption" required>
+                                  </div>
+                              </div>
+                             <div class="form-group">
+                                  <div class="col-sm-4">
+                                    <label for="score">评分</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <input type="number" step="0.01" min="0" max="5" name="score" id="add_score" class="form-control" placeholder="0.01" required>
+                                  </div>
+                              </div>
+                             <!--input type="hidden" name="record_id" id="add_record_id" class="form-control"-->
+                             <button type="submit" class="mt-3 btn btn-primary">提交</button>
+                        </form>       
+                        <!-- end modal form -->
+                      </div><!-- end modal body -->
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                      </div> <!-- end modal footer -->
+                    </div> <!-- end modal content -->
+                  </div> <!-- end modal dialog -->
+                </div> <!-- end modal myUpdateForm -->
+  
+              
+                <!--- MyUpdateForm -->
+                <div class="modal fade" id="myUpdateForm" role="dialog">
+                  <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Update Entry</h4>
+                      </div>
+                      <div class="modal-body">
+                        <!-- modal form -->
+                        
+                         <form role="form" method="post" action="/update_restaurant">
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                      <label for="rank">餐厅排名</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                      <input type="number" name="rank" id="upd_rank" class="form-control" placeholder="rank" disabled>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                    <label for="name">餐厅名称</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <input type="text" name="name" id="upd_name" class="form-control" placeholder="name" required autofocus>
+                                  </div>
+                              </div>
+                             <div class="form-group">
+                                  <div class="col-sm-4">
+                                    <label for="img">图片</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <input type="text" name="img" id="upd_img" class="form-control" placeholder="img" required>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                    <label for="food_type">食物类型</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <input type="text" name="food_type" id="upd_food_type" class="form-control" placeholder="food_type" required>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                    <label for="destination">地点</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <input type="text" name="destination" id="upd_destination" class="form-control" placeholder="destination" required>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                    <label for="per">人均消费</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <input type="text" name="per" id="upd_per" class="form-control" placeholder="per" required>
+                                  </div>
+                              </div>
+                               <div class="form-group">
+                                  <div class="col-sm-4">
+                                    <label for="score">评分</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <input type="number" min="0" step="0.01" max="5" name="score" id="upd_score" class="form-control" placeholder="0.00" required/>
+                                  </div>
+                              </div>
+                             <input type="hidden" name="record_id" id="upd_record_id" class="form-control"-->
+                             <button type="submit" class="mt-3 btn btn-primary">提交</button>
+                        </form>       
+                        <!-- end modal form -->
+                      </div><!-- end modal body -->
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                      </div> <!-- end modal footer -->
+                    </div> <!-- end modal content -->
+                  </div> <!-- end modal dialog -->
+                </div> <!-- end modal myUpdateForm -->
+
+                <!--- myDeleteForm -->
+                <div class="modal fade" id="myDeleteForm" role="dialog">
+                  <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Delete Entry</h4>
+                      </div>
+                      <div class="modal-body">
+                        <!-- modal form -->
+                        <form method="post" action="/delete_restaurant">
+                          <div class="form-group">
+                                  <div class="col-sm-4">
+                                      <label for="rank">餐厅排名</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                      <input type="number" name="rank" id="del_rank" class="form-control" placeholder="rank" disabled>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                    <label for="name">餐厅名称</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <input type="text" name="name" id="del_name" class="form-control" placeholder="name" disabled>
+                                  </div>
+                              </div>
+                            <div class="form-group">
+                                  <div class="col-sm-4">
+                                    <label for="img">图片</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <input type="text" name="img" id="del_img" class="form-control" placeholder="img" disabled>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                    <label for="food_type">食物类型</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <input type="text" name="food_type" id="del_food_type" class="form-control" placeholder="food_type" disabled>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                    <label for="destination">地点</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <input type="text" name="destination" id="del_destination" class="form-control" placeholder="destination" disabled>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <div class="col-sm-4">
+                                    <label for="per">人均消费</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <input type="text" name="per" id="del_per" class="form-control" placeholder="per" disabled>
+                                  </div>
+                              </div>
+                               <div class="form-group">
+                                  <div class="col-sm-4">
+                                    <label for="score">评分</label>
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <input type="number" name="score" id="del_score" class="form-control" placeholder="score" disabled>
+                                  </div>
+                              </div>
+                          <input type="hidden" name="record_id" id="del_record_id" class="form-control">
+                          <button type="submit" class="mt-3 btn btn-primary">提交</button>
+                        </form>
+                        <!-- end modal form -->
+                      </div><!-- end modal body -->
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                      </div> <!-- end modal footer -->
+                    </div> <!-- end modal content -->
+                  </div> <!-- end modal dialog -->
+                </div> <!-- end modal myDeleteForm -->
+          </div><!--end container-->
+        </div><!--container-fluid-->
+    </div>
+    <!-- /#page-content-wrapper -->
+</div>
+<!-- /#wrapper -->
+<script src="{{url_for('static', filename='js/jquery-3.3.1.js')}}"></script>
+<script src="{{url_for('static', filename='js/bootstrap-3.3.7.min.js')}}"></script>    
+<script src="{{url_for('static', filename='js/jquery.dataTables.min.js')}}"></script>    
+<script src="{{url_for('static', filename='js/dataTables.bootstrap.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/dataTables.buttons.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/dataTables.select.min.js')}}"></script>   
+<script src="{{url_for('static', filename='js/dataTables.responsive.min.js')}}"></script>    
+<script src="{{url_for('static', filename='js/dataTables.fixedHeader.min.js')}}"></script>    
+<script src="{{url_for('static', filename='js/responsive.bootstrap.min.js')}}"></script>    
+<script src="{{url_for('static', filename='js/buttons.bootstrap.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/jquery-ui.js')}}"></script>
+<script src="{{url_for('static', filename='js/list_album.js')}}"></script>
+</body>
+</html>
